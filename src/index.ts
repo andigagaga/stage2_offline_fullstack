@@ -2,6 +2,8 @@ import { AppDataSource } from "./data-source";
 import * as express from "express";
 import { Request, Response } from "express";
 import threadRouter from "./route/threadsRoute";
+import userRouter from "./route/usersRoute";
+
 
 AppDataSource.initialize()
     .then(async () => {
@@ -10,6 +12,7 @@ AppDataSource.initialize()
 
         app.use(express.json());
         app.use("/api/v1", threadRouter);
+        app.use("/api/v1", userRouter);
 
         app.get("/", (req: Request, res: Response) => {
             res.send("Guswandi");

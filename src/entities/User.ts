@@ -2,14 +2,14 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
 import { Threads } from "./Thread"
 
 
-@Entity({name: "users"})
+@Entity({ name: "users" })
 
 export class User {
     @PrimaryGeneratedColumn()
     id: number
 
     @Column()
-    userName:string;
+    userName: string;
 
     @Column()
     fullName: string;
@@ -17,20 +17,20 @@ export class User {
     @Column()
     email: string;
 
-    @Column({select:false})
+    @Column({ select: true })
     password: string;
 
-    @Column({nullable:true})
+    @Column({ nullable: true })
     profile_picture: string;
 
-    @Column({nullable:true})
+    @Column({ nullable: true })
     profile_desc: string;
 
-    @OneToMany(() => Threads, (thread) => thread.user,  {
+    @OneToMany(() => Threads, (thread) => thread.user, {
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
     })
     threads: Threads[]
 
-    
+
 }

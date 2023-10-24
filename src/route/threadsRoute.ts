@@ -1,5 +1,5 @@
 import * as express from "express"
-import ThreadController from "../controllers/index"
+import ThreadController from "../controllers/thread"
 
 
 const router = express.Router();

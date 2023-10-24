@@ -3,8 +3,6 @@ import { Threads } from "../entities/Thread";
 import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { CreateThreadSchema, UpdateThreadSchema } from "../utils/validator/Joi";
-import { promises } from "dns";
-import { log } from "console";
 
 export default new (class ThreadServices {
     private readonly threadRepository: Repository<Threads> =
