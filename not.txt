@@ -1,0 +1,15 @@
+entitis - service - controller  - route 
+
+
+
+type Threads = {
+  id: number;
+  author_picture: string;
+  author_name: string;
+  author_userName: string;
+  posted_at: string;
+  content: string;
+  likes_count: number;
+  replies_count: number;
+  image: string;
+};
