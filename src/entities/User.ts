@@ -1,5 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, Like } from "typeorm"
 import { Threads } from "./Thread"
+import { Reply } from "./Reply";
+// import reply from "../services/reply";
+import { Likes } from "./Like";
+import Follower from "../services/Follower";
+import { Followtis } from "./Follow";
 
 
 @Entity({ name: "users" })
@@ -31,6 +36,30 @@ export class User {
         onDelete: "CASCADE"
     })
     threads: Threads[]
+
+    @OneToMany(() => Reply, (reply) => reply.user, {
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
+    })
+    reply: Reply[]
+
+    @OneToMany(() => Likes , (like) => like.likeToUser, {
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
+    })
+    likeToUser: Likes[]
+
+    @OneToMany(() => Followtis , (follower) => follower.followToUser, {
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
+    })
+    followToUser: Followtis[]
+
+    @OneToMany(() => Followtis , (following) => following.followingToUser, {
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
+    })
+    followingToUser: Followtis[]
 
 
 }

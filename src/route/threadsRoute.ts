@@ -1,11 +1,12 @@
 import * as express from "express"
 import ThreadController from "../controllers/thread"
-
+import { authenticate } from "../middlewares/Auth";
+import upload from "../middlewares/UploadsImage";
 
 const router = express.Router();
 
-router.get("/threads", ThreadController.find)
-router.post("/thread", ThreadController.create)
+router.get("/threads", authenticate,ThreadController.find)
+router.post("/thread", authenticate,upload.single("image"),ThreadController.create)
 router.patch("/thread/:id", ThreadController.update)
 router.delete("/thread/:id", ThreadController.delete)
 

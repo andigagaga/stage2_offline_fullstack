@@ -1,12 +1,12 @@
-import { Repository } from "typeorm"
-import { AppDataSource } from "../data-source"
-import { User } from "../entities/User"
+import { Repository } from "typeorm";
+import { AppDataSource } from "../data-source";
+import { User } from "../entities/User";
 import { Request, Response } from "express";
 import { createUserSchema, updateUserSchema } from "../utils/validator/Joi";
 
 export default new (class UserServices {
-    private readonly userRepository: Repository<User> = 
-    AppDataSource.getRepository(User);
+    private readonly userRepository: Repository<User> =
+        AppDataSource.getRepository(User);
 
     async find(req: Request, res: Response): Promise<Response> {
         try {
@@ -35,7 +35,7 @@ export default new (class UserServices {
                 email: value.email,
                 password: value.password,
                 profile_picture: value.profile_picture,
-                profile_desc: value.profile_desc
+                profile_desc: value.profile_desc,
             });
 
             const saveUser = await this.userRepository.save(user);
@@ -48,19 +48,19 @@ export default new (class UserServices {
 
     async update(req: Request, res: Response): Promise<Response> {
         try {
-            const id = parseInt(req.params.id)
+            const id = parseInt(req.params.id);
 
-            const user = await this.userRepository.findOne({ where: { id: id } })
+            const user = await this.userRepository.findOne({ where: { id: id } });
 
             if (!user) {
-                return res.status(404).send("there not found")
+                return res.status(404).send("there not found");
             }
 
             const data = req.body;
 
             const { error } = updateUserSchema.validate(data);
             if (error) {
-                return res.status(400).send(error.details[0].message)
+                return res.status(400).send(error.details[0].message);
             }
 
             if (data.userName) {
@@ -83,40 +83,36 @@ export default new (class UserServices {
                 user.profile_picture = data.profile_picture;
             }
 
-
             await this.userRepository.save(user);
 
             const updateUser = await this.userRepository.save(user);
             return res.status(200).send(updateUser);
-
         } catch (error) {
             console.log(error);
-            return res.status(500).send(error)
-
+            return res.status(500).send(error);
         }
     }
 
     async delete(req: Request, res: Response): Promise<Response> {
-
         try {
             const id = parseInt(req.params.id);
             const user = await this.userRepository.findOne({
                 where: { id: id },
-            })
+            });
             if (!user) {
                 return res.status(404).send("there not found");
             } else {
-                const deleteThread = await this.userRepository.delete({id:id})
+                const deleteThread = await this.userRepository.delete({ id: id });
                 return res.status(200).send({
                     thread: deleteThread,
-                    message: "user deleted"
-                })
+                    message: "user deleted",
+                });
             }
         } catch (error) {
             console.log(error);
-            return res.status(500).send(error)
-
+            return res.status(500).send(error);
         }
-
     }
-})
+
+    
+})();
