@@ -8,7 +8,7 @@ export default function Form() {
   const [formData, setFormData] = useState<formThreads>({
     content: "",
     image: "",
-    user: "3",
+    user: "",
   });
 
   const handleChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +37,7 @@ export default function Form() {
       setFormData({
         content: "",
         image: "",
-        user: "3",
+        user: "",
       });
     },
 
