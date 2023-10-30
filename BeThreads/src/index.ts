@@ -9,6 +9,7 @@ import followerRouter from "./route/Follower";
 import followingRouter from "./route/Following";
 import AuthRoutes from "./route/Auth";
 import * as cors from "cors";
+import "dotenv/config"
 
 AppDataSource.initialize()
     .then(async () => {

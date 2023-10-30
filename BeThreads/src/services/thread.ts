@@ -31,8 +31,6 @@ export default new (class ThreadServices {
             const data = req.body;
             const user = res.locals.loginSession;
             console.log(user);
-            
-            
 
             const { error, value } = CreateThreadSchema.validate(data);
             if (error) {
@@ -47,16 +45,15 @@ export default new (class ThreadServices {
             });
 
             const result = await cloudinary.uploader.upload(req.file.path, {
-				folder: "circle-app",
-			});
+                folder: "circle-app",
+            });
 
-            console.log("fffffffff",req.file.path);
-            
+            console.log("fffffffff", req.file.path);
 
             const thread = this.threadRepository.create({
                 content: value.content,
                 image: result.secure_url,
-                user: user.user.id
+                user: user.user.id,
             });
 
             const saveThread = await this.threadRepository.save(thread);

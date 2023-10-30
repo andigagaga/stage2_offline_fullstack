@@ -19,7 +19,7 @@ export default new (class UserServices {
                 .json({ error: "Terjadi kesalahan dalam permintaan." });
         }
     }
-
+    
     async create(req: Request, res: Response): Promise<Response> {
         try {
             const data = req.body;
