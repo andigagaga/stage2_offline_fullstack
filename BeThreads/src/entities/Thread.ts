@@ -5,6 +5,7 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
+  JoinColumn,
 } from "typeorm";
 import { User } from "./User";
 import { Likes } from "./Like";
@@ -21,20 +22,25 @@ export class Threads {
   @Column()
   image: string;
 
-  @ManyToOne(() => User, (user) => user.threads)
-  // , { onUpdate: "CASCADE", onDelete: "CASCADE" })
-  user: User;
-
-  @OneToMany(() => Likes, (like) => like.likeToThread, {
+  @ManyToOne(() => User, (user) => user.threads, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE"
   })
-  likeToThread: Likes[]
+  // @JoinColumn({ name: "user_id" })
+  users: User;
 
-  @OneToMany(() => Reply, (reply) => reply.thread, {
+  @OneToMany(() => Likes, (like) => like.threads, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE"
   })
-  selectedthread: Reply[]
+  @JoinColumn()
+  likes: Likes[]
+
+  @OneToMany(() => Reply, (reply) => reply.threads, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
+  })
+  @JoinColumn()
+  reply: Reply[]
 
 }

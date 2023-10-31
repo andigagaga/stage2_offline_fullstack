@@ -40,8 +40,8 @@ export const createReplySchema = joi.object({
 
 
 export const likesSchema = joi.object({
-    likeToUser: joi.string().required(),
-    likeToThread: joi.string().required()
+    users: joi.string().required(),
+    threads: joi.string().required()
 })
 
 export const followerSchema = joi.object({

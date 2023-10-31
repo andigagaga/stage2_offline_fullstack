@@ -46,7 +46,7 @@ export default new (class replyServices {
 
             const replies = await this.replyRepository.create({
                 user: value.user,
-                thread: value.thread,
+                threads: value.thread,
                 image: value.image,
                 content: value.content,
             });

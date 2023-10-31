@@ -27,7 +27,7 @@ export default new (class ThreadWolker {
                         const thread = this.threadRepository.create({
                             content: payload.content,
                             image: cloudinaryResponse,
-                            user: {
+                            users: {
                                 id: payload.id,
                             },
                         });

@@ -7,11 +7,11 @@ export class Followtis {
     @PrimaryGeneratedColumn()
     id: number
 
-    @ManyToOne(() => User , (user) => user.followToUser, {
+    @ManyToOne(() => User , (user) => user.follower, {
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
     })
-    followToUser: User
+    follower: User
 
     @ManyToOne(() => User , (user) => user.followingToUser, {
         onUpdate: "CASCADE",

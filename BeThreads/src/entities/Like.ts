@@ -11,16 +11,16 @@ export class Likes {
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     create_at: Date
 
-    @ManyToOne(() => User , (user) => user.likeToUser, {
+    @ManyToOne(() => User , (user) => user.likes, {
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
     })
-    likeToUser: User
+    users: User
 
-    @ManyToOne(() => Threads , (thread) => thread.likeToThread, {
+    @ManyToOne(() => Threads , (thread) => thread.likes, {
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
     })
-    likeToThread: Threads
+    threads: Threads
 
 }

@@ -13,9 +13,7 @@ export default new (class ThreadServices {
     async find(req: Request, res: Response): Promise<Response> {
         try {
             const threads = await this.threadRepository.find({
-                relations: {
-                    user: true,
-                },
+                relations: ["users", "like", "reply"],
             }); // Menjalankan pencarian thread
             return res.json(threads); // Mengirim respons JSON dengan daftar thread
         } catch (error) {
@@ -53,7 +51,7 @@ export default new (class ThreadServices {
             const thread = this.threadRepository.create({
                 content: value.content,
                 image: result.secure_url,
-                user: user.user.id,
+                users: user.user.id,
             });
 
             const saveThread = await this.threadRepository.save(thread);
@@ -92,7 +90,7 @@ export default new (class ThreadServices {
             }
 
             if (data.user) {
-                thread.user = data.user;
+                thread.users = data.user;
             }
 
             await this.threadRepository.save(thread);

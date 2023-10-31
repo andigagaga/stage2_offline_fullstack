@@ -31,7 +31,7 @@ export class User {
     @Column({ nullable: true })
     profile_desc: string;
 
-    @OneToMany(() => Threads, (thread) => thread.user, {
+    @OneToMany(() => Threads, (thread) => thread.users, {
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
     })
@@ -43,17 +43,17 @@ export class User {
     })
     reply: Reply[]
 
-    @OneToMany(() => Likes , (like) => like.likeToUser, {
+    @OneToMany(() => Likes , (like) => like.users, {
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
     })
-    likeToUser: Likes[]
+    likes!: Likes[]
 
-    @OneToMany(() => Followtis , (follower) => follower.followToUser, {
+    @OneToMany(() => Followtis , (follower) => follower.follower, {
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
     })
-    followToUser: Followtis[]
+    follower: Followtis[]
 
     @OneToMany(() => Followtis , (following) => following.followingToUser, {
         onUpdate: "CASCADE",

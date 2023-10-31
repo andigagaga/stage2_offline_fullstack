@@ -39,7 +39,7 @@ export default new (class followSevices {
         }
 
         const follower = await this.followRepository.create({
-            followToUser: value.followerToUser
+            follower: value.followerToUser
         });
 
         const saveFollower = await this.followRepository.save(follower);
