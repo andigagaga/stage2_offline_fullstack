@@ -10,7 +10,7 @@ export default function Main({ children }: { children: ReactNode }) {
 
 			{children}
 
-			
+			z
 		</>
 	);
 }
