@@ -13,7 +13,7 @@ export default new (class ThreadServices {
     async find(req: Request, res: Response): Promise<Response> {
         try {
             const threads = await this.threadRepository.find({
-                relations: ["users", "like", "reply"],
+                relations: ["users", "likes", "reply"],
             }); // Menjalankan pencarian thread
             return res.json(threads); // Mengirim respons JSON dengan daftar thread
         } catch (error) {

@@ -2,7 +2,7 @@ export type IThreadPost = {
   id: number;
 	content: string;
 	image: string;
-	user: {
+	users: {
 		userName: string;
 		fullName: string;
 		profile_picture: string;

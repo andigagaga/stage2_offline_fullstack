@@ -26,7 +26,6 @@ export class Threads {
     onUpdate: "CASCADE",
     onDelete: "CASCADE"
   })
-  // @JoinColumn({ name: "user_id" })
   users: User;
 
   @OneToMany(() => Likes, (like) => like.threads, {
