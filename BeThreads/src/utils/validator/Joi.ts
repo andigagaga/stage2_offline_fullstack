@@ -45,11 +45,11 @@ export const likesSchema = joi.object({
 })
 
 export const followerSchema = joi.object({
-    followerToUser: joi.number()
+    usersFollowing: joi.number()
 })
 
 export const followingSchema = joi.object({
-    followerToUser: joi.number()
+    usersFollower: joi.number()
 })
 
 import * as Joi from "joi";

@@ -11,23 +11,7 @@ export default new (class ThreadServices {
         AppDataSource.getRepository(Threads);
 
         async find(req: Request, res: Response): Promise<Response> {
-        //     try {
-        //         const threads = await this.threadRepository.find({
-        //             relations: ["users", "likes", "replies"],
-        //             order: {
-        //                 id: "DESC",
-        //             },
-        //         });
-        //         console.log(threads);
-                
-    
-        //         return res.status(200).json({ status: "success", data: threads });
-        //     } catch (err) {
-        //         return res
-        //             .status(500)
-        //             .json({ Error: `Error while getting threads ${err.message}` });
-        //     }
-        // }
+       
 
         try {
             const threads = await this.threadRepository.find({
@@ -127,7 +111,7 @@ export default new (class ThreadServices {
             const id = parseInt(req.params.id);
             const thread = await this.threadRepository.findOne({
                 where: { id: id },
-                relations: ["user"],
+                relations: ["users"],
             });
             if (!thread) {
                 return res.status(404).send("there not found");

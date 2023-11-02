@@ -1,77 +1,67 @@
 import { Repository } from "typeorm"
-import { Followtis } from "../entities/Follow"
+import { User } from "../entities/User"
 import { AppDataSource } from "../data-source"
-import { Request, Response } from "express";
-import { followerSchema } from "../utils/validator/Joi";
+import { Request, Response } from "express"
 
-export default new (class followSevices {
-    private readonly followRepository : Repository<Followtis> = 
-    AppDataSource.getRepository(Followtis);
+export default new (class FollowingServices {
+    private readonly UserRepository: Repository<User> = AppDataSource.getRepository(User)
 
 
-    async findFollower(req: Request, res: Response): Promise<Response> {
+    async follow(req: Request, res: Response): Promise<Response> {
         try {
-            const follower = await this.followRepository.find({
-                relations: ["followToUser"]
-            })
+            const userId = Number(req.params.id)
 
-            return res.status(200).json({
-                status: "success",
-                data: {
-                    follower: follower,
+            if (!userId) {
+                return res.status(400).json({ message: "userId not found" })
+            }
+
+            const followingToUser: User | null = await this.UserRepository.findOne({
+                where: {
+                    id: userId
                 }
             })
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json({Error: "follower is error"})
-            
-        }
-    }
 
-    async createFollower(req: Request, res: Response): Promise<Response> {
-        try {
-            const data = req.body;
-
-        const {error, value} = await followerSchema.validate(data);
-
-        if (error) {
-            return res.status(400).json({Error: "Data Yang Dimasukkan Tidak Valid"})
-        }
-
-        const follower = await this.followRepository.create({
-            follower: value.followerToUser
-        });
-
-        const saveFollower = await this.followRepository.save(follower);
-        return res.status(200).json(saveFollower)
-        } catch (error) {
-            console.log(error);
-            return res.status(500).send(error)
-            
-        }
-        
-    }
-
-    async deletedFollower(req: Request, res: Response) : Promise<Response> {
-        try {
-            const id = parseInt(req.params.id);
-            const follower = await this.followRepository.findOne({
-                where: {id},
-            })
-    
-            if(!follower) {
-                return res.status(404).json({ Error: "error did mount"})
+            if (!followingToUser) {
+                return res.status(400).json({ message: "user not found" })
             }
-    
-            await this.followRepository.delete({
-                id: id,
+
+            const followerToUser: User | null = await this.UserRepository.findOne({
+                where: {
+                    id: res.locals.loginSession.user.id
+                }
             })
-            return res.status(200).json({data: follower})
+
+            if (!followerToUser) {
+                return res.status(400).json({ message: "user not found" })
+            }
+
+            if (followingToUser.id === followerToUser.id) {
+                return res.status(400).json({ message: "you can't follow yourself" })
+            }
+
+            const checkFollow = await this.UserRepository.query(
+                "SELECT * FROM following WHERE following_id=$1 AND follower_id=$2", [followingToUser.id, followerToUser.id]
+            );
+
+            if (checkFollow.length) {
+                await this.UserRepository.query(
+                    "DELETE FROM following WHERE following_id=$1 AND follower_id=$2",
+                    [followingToUser.id, followerToUser.id]
+                )
+                return res.status(200).json({ message: "unfollowed" })
+            }
+
+            await this .UserRepository.query(
+                "INSERT INTO following (following_id, follower_id) VALUES ($1, $2)",
+                [followingToUser.id, followerToUser.id]
+            )
+            return res.status(200).json({ 
+                status: "succes"
+                ,message: "followed" })
+            
         } catch (error) {
             console.log(error);
-            return res.status(500).json({Error: `error while deletering ${error.message}`})
-            
+
         }
-      
     }
 })

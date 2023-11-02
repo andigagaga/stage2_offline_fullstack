@@ -1,10 +1,9 @@
 import * as express from "express"
-import FollowingController from "../controllers/Following";
+import FollowController from "../controllers/Follow"
+import { authenticate } from "../middlewares/Auth"
 
-const followingRouter = express.Router();
+const router = express.Router();
 
-followingRouter.get("/followings", FollowingController.findFollowing)
-followingRouter.post("/following", FollowingController.createFollowing)
-followingRouter.delete("/following/:id", FollowingController.deletedFollowing)
+router.post("/follow/:id", authenticate, FollowController.follow)
 
-export default followingRouter;
+export default router;
