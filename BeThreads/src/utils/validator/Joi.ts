@@ -1,16 +1,16 @@
-import { strict } from "assert"
+// import { strict } from "assert"
 import * as joi from "joi"
 
 export const CreateThreadSchema = joi.object({
     content: joi.string(),
     image: joi.string(),
-    user: joi.string()
+    users: joi.number()
 })
 
 export const UpdateThreadSchema = joi.object({
     content: joi.string(),
     image: joi.string(),
-    user: joi.string()
+    users: joi.string()
 })
 
 export const createUserSchema = joi.object({
@@ -40,8 +40,8 @@ export const createReplySchema = joi.object({
 
 
 export const likesSchema = joi.object({
-    users: joi.string().required(),
-    threads: joi.string().required()
+    users: joi.number().required(),
+    threads: joi.number().required()
 })
 
 export const followerSchema = joi.object({
@@ -64,6 +64,6 @@ export const registerSchema = Joi.object({
 });
 
 export const loginSchema = Joi.object({
-	email: Joi.string().required(),
-	password: Joi.string().required(),
+    email: Joi.string().required(),
+    password: Joi.string().required(),
 });

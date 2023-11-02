@@ -1,8 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
-// import UnauthorizedError from "../utils/exception/custom/UnauthorizedError";
-// // import Env from "../utils/variables/Env";
-// import handleError from "../utils/exception/handleError";
 
 export function authenticate(
 	req: Request,
@@ -18,12 +15,12 @@ export function authenticate(
 
 	try {
 		// dotenv.config();
-		const loginSession = jwt.verify(token, "btwtt");
+		const loginSession = jwt.verify(token, "jwt_secret");
 		res.locals.loginSession = loginSession;
 		next();
 	} catch (error) {
 		return res.status(401).json({
-			error: "unauthorized di midlewares",
+			error: "unauthorized",
 		});
 	}
 }

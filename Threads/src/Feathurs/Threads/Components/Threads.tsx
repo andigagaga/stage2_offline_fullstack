@@ -20,15 +20,15 @@ export default function Threads(props: IThreadPost) {
         <Box position="relative">
           <img
             src={props.image}
-            alt={props.user?.userName}
+            alt={props.users?.userName}
             style={{ width: "100%" }}
           />
           <Box>
             <Text fontWeight="bold" color="white">
-              {props.user?.fullName}
+              {props.users?.fullName}
             </Text>
             <Text color="gray" fontSize="sm">
-              {props.user.userName}
+              {props.users?.userName}
             </Text>
           </Box>
         </Box>

@@ -7,6 +7,7 @@ import { AppDataSource } from "../data-source";
 import { User } from "../entities/User";
 import { loginSchema, registerSchema } from "../utils/validator/Joi";
 // import Env from "../utils/variables/Env";
+import "dotenv/config"
 
 export default new (class AuthServices {
   private readonly AuthRepository: Repository<User> =
@@ -53,7 +54,7 @@ export default new (class AuthServices {
 
   async login(req: Request, res: Response): Promise<Response> {
     try {
-      console.log("AAA");
+      // console.log("AAA");
       
       const data = req.body;
 
@@ -63,7 +64,7 @@ export default new (class AuthServices {
         where: {
           email: value.email,
         },
-        // select: ["id", "fullName", "email", "userName", "password"],
+        select: ["id", "fullName", "email", "userName", "password"],
       });
 
       if (!isCheckEmail)
@@ -84,7 +85,7 @@ export default new (class AuthServices {
         userName: isCheckEmail.userName,
       };
 
-      const token = jwt.sign({ user }, "btwtt", {
+      const token = jwt.sign({ user }, "jwt_secret", {
         expiresIn: "1h",
       });
 
@@ -93,7 +94,7 @@ export default new (class AuthServices {
         token,
       });
     } catch (err) {
-      return res.status(500).json({ Error: "Error while logging in" });
+      return res.status(500).json({ Error: `Error while logging in ${err.message}` });
     }
   }
 

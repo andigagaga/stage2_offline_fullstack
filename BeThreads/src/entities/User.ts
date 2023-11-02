@@ -41,7 +41,7 @@ export class User {
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
     })
-    reply: Reply[]
+    replies: Reply[]                          
 
     @OneToMany(() => Likes , (like) => like.users, {
         onUpdate: "CASCADE",

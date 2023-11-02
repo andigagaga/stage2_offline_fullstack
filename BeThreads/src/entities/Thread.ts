@@ -22,6 +22,9 @@ export class Threads {
   @Column()
   image: string;
 
+  @Column({ nullable: true})
+	posted_at: Date;
+
   @ManyToOne(() => User, (user) => user.threads, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE"
@@ -32,14 +35,14 @@ export class Threads {
     onUpdate: "CASCADE",
     onDelete: "CASCADE"
   })
-  @JoinColumn()
+  // @JoinColumn()
   likes: Likes[]
 
   @OneToMany(() => Reply, (reply) => reply.threads, {
     onUpdate: "CASCADE",
     onDelete: "CASCADE"
   })
-  @JoinColumn()
-  reply: Reply[]
+  // @JoinColumn()
+  replies: Reply[]
 
 }

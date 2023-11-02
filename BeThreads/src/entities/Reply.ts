@@ -21,13 +21,13 @@ export class Reply {
     @UpdateDateColumn()
     updated_at: Date
 
-    @ManyToOne(() => User , (user) => user.reply, {
+    @ManyToOne(() => User , (user) => user.replies, {
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
     })
     user: User
 
-    @ManyToOne(() => Threads, (thread) => thread.reply, {
+    @ManyToOne(() => Threads, (thread) => thread.replies, {
 		onUpdate: "CASCADE",
 		onDelete: "CASCADE",
 	})

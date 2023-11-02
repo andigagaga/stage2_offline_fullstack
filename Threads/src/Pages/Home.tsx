@@ -61,7 +61,7 @@ export default function Home() {
                   id={data.id}
                   content={data.content}
                   image={data.image}
-                  user={data.user}
+                  users={data.users}
                 />
               </Box>
             ))}
