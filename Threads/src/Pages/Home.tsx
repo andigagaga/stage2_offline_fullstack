@@ -7,15 +7,15 @@ import MyNavbar from "./Navbar";
 import Profile from "./Profile";
 import Form from "../Feathurs/Threads/Components/Form";
 import { API } from "../libs/Api";
-import { IThreadPost as TypeDataThread } from "../types/threadTypes";
-
+import { IThreadCard  } from "../types/threadTypes";
 export default function Home() {
   const { data: threadData } = useQuery({
     queryKey: ["thread"],
     queryFn: async () => {
       const { data } = await API.get("/threads");
       return data;
-    }
+    },
+    refetchInterval: 1000
   })
   console.log(threadData);
   
@@ -54,7 +54,7 @@ export default function Home() {
             <Form />
             {/* Display comments */}
 
-            {threadData?.map((data: TypeDataThread) => (
+            {threadData?.map((data: IThreadCard) => (
               <Box border="1px solid #ccc" key={data.id}  borderRadius="md" p={2} mb={2}>
                 <Threads
                   // key={data.id}

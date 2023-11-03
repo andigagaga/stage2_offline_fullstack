@@ -31,6 +31,8 @@ export default new class ThreadWorker {
                                 id: payload.users,
                             },
                         });
+                        console.log(thread);
+                        
 
                         
                         

@@ -3,7 +3,7 @@ import { useState, ChangeEvent } from "react";
 import { API } from "../../../../libs/Api";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { AUTH_LOGIN } from "../../../../Store/Slice/rootReducer";
+import { AUTH_LOGIN } from "../../../../Store/rootReducer";
 
 
 export function useLogin() {
@@ -26,7 +26,10 @@ export function useLogin() {
 		try {
 			const response = await API.post("/auth/login", form);
 
+			console.log(response);
+			
 			if (response.status === 200) {
+
 				// Jika responsenya berhasil (status 200 OK), Anda dapat melakukan tindakan yang sesuai
 				disPatch(AUTH_LOGIN(response?.data));
 				navigate("/");

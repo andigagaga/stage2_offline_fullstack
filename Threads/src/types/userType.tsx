@@ -4,6 +4,7 @@ export type IUser = {
     fullName: string;
     email: string;
     profile_picture: string;
+	profile_desc: string;
 }
 
 export type IUserRegister = {

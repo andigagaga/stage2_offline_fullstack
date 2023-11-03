@@ -28,15 +28,17 @@ export default function FormRegister() {
 					placeholder="First name"
 					name="fullName"
 					onChange={handleChange}
+					value={form.fullName}
 					
 				/>
 				<Input placeholder="Username" name="userName" onChange={handleChange} value={form.userName}/>
-				<Input placeholder="Email" name="email" onChange={handleChange}/>
+				<Input placeholder="Email" name="email" onChange={handleChange} value={form.email}/>
 				<Input
 					type="password"
 					placeholder="Password"
 					name="password"
 					onChange={handleChange}
+					value={form.password}
 				/>
 				<Button
 					backgroundColor={"green"}

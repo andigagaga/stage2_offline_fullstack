@@ -1,4 +1,4 @@
-export type IThreadPost = {
+export type IThreadCard = {
   id?: number;
 	content?: string;
 	image?: string;
@@ -8,3 +8,9 @@ export type IThreadPost = {
 		profile_picture?: string;
 	};
 };
+
+export type IThreadsPost = {
+	content: string;
+	image:Blob | string | null;
+  };
+  

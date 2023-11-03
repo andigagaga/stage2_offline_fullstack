@@ -1,4 +1,4 @@
-import { authSlice } from "./authSlice";
+import { authSlice } from "./Slice/authSlice";
 import { combineReducers } from "@reduxjs/toolkit";
 
 export const { AUTH_LOGIN, AUTH_CHECK, AUTH_ERROR, AUTH_LOGOUT } =

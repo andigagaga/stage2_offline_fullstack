@@ -1,10 +1,10 @@
 // import React from "react";
 import { Box, Text, Flex, Icon } from "@chakra-ui/react";
 import { FaHeart, FaComment } from "react-icons/fa";
-import { IThreadPost } from "../../../types/threadTypes";
+import { IThreadCard } from "../../../types/threadTypes";
 import { Link } from "react-router-dom";
 
-export default function Threads(props: IThreadPost) {
+export default function Threads(props: IThreadCard) {
   return (
     <Flex
       backgroundColor="gray.700"

@@ -3,11 +3,11 @@ import { Route, Routes, Navigate, Outlet, useNavigate } from "react-router-dom";
 // import DetailThreads from "./Feathurs/Threads/Components/DetailThreads";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
-import { RootState } from "./Store/Slice/Type/rootState";
+import { RootState } from "./Store/Type/rootState";
 import { useDispatch, useSelector } from "react-redux";
 import { API, setAuthToken } from "./libs/Api";
 import { useEffect, useState } from "react";
-import { AUTH_CHECK, AUTH_ERROR } from "./Store/Slice/rootReducer";
+import { AUTH_CHECK, AUTH_ERROR } from "./Store/rootReducer";
 import Main from "./LayOut/Main";
 
 
