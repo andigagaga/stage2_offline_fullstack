@@ -1,3 +1,5 @@
+import { ThreadLikeType } from "./like";
+
 export type IThreadCard = {
   id?: number;
 	content?: string;
@@ -7,6 +9,8 @@ export type IThreadCard = {
 		fullName?: string;
 		profile_picture?: string;
 	};
+	likes?: ThreadLikeType[];
+	isLikes: boolean;
 };
 
 export type IThreadsPost = {

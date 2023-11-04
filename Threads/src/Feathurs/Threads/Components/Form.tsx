@@ -1,17 +1,12 @@
 import { Box, Input, Button, Text } from "@chakra-ui/react";
-// import { ChangeEvent } from "react";
-// import { formThreads } from "../../../types/formThread";
-// import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import { API } from "../../../libs/Api";
+import { BiImageAdd } from "react-icons/bi";
 import { useThreads } from "../Hooks/useThreads";
 
 export default function Form() {
-  const { form, handlePost, handleChange, handleButtonClick, fileInputRef } = useThreads();
+  const { form, handlePost, handleChange, fileInputRef } = useThreads();
 
   return (
-    <form
-      onSubmit={handlePost}
-      encType="multipart/form-data">
+    <form onSubmit={handlePost} encType="multipart/form-data">
       <Box display="flex" marginBottom={8} flexDirection={"column"} padding={4}>
         <Box>
           <Text color={"white"} fontWeight={"bold"}>
@@ -29,35 +24,46 @@ export default function Form() {
             onChange={handleChange}
             marginY={4}
           ></Input>
-          <Button variant={"gost"}
-            color={"green"} onClick={handleButtonClick}>
-
-          </Button>
         </Box>
 
-        <Box>
-          <Text color={"white"} fontWeight={"bold"}>
+        <Box marginBottom={4}>
+          <Text color={"white"} fontWeight={"bold"} marginBottom={2}>
             Your Photos
           </Text>
-          <Input
-            placeholder="Click Is Your Posting..."
-            color="white"
-            fontWeight={"bold"}
-            flex="1"
-            mr={2}
-            border="1px solid #ccc"
-            name="image"
-            onChange={handleChange}
-            marginY={4}
-            type="file"
-            ref={fileInputRef}
-          ></Input>
+          <label
+            htmlFor="image"
+            style={{
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "column",
+              backgroundColor: "#007BFF",
+              color: "white",
+              borderRadius: "5px",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
+              padding: "5px",
+            }}
+          >
+            <BiImageAdd size={"30px"} />
+            <Input
+              id="image"
+              variant="flushed"
+              type="file"
+              placeholder="What's on your mind"
+              maxW="25rem"
+              name="image"
+              onChange={handleChange}
+              hidden
+              ref={fileInputRef}
+            />
+          </label>
         </Box>
 
-        <Button colorScheme="green" type="submit" >
+        <Button colorScheme="green" type="submit">
           Post
         </Button>
       </Box>
-    </form >
+    </form>
   );
 }

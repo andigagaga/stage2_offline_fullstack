@@ -1,10 +1,11 @@
 import * as express from "express"
 import replyController from "../controllers/Reply";
+import { authenticate } from "../middlewares/Auth";
 
 const replyRouter = express.Router();
 
 replyRouter.get("/replys", replyController.find)
-replyRouter.post("/reply", replyController.create)
-replyRouter.get("/reply/:id", replyController.findOne)
+replyRouter.post("/reply/:id/",authenticate, replyController.create)
+// replyRouter.get("/reply/:id", replyController.findOne)
 
 export default replyRouter;

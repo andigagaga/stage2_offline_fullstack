@@ -34,7 +34,7 @@ export const updateUserSchema = joi.object({
 export const createReplySchema = joi.object({
     user: joi.number().required(),
     thread: joi.number().required(),
-    image: joi.string().required(),
+    image: joi.string(),
     content: joi.string().required(),
 })
 

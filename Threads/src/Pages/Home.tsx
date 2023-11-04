@@ -52,8 +52,6 @@ export default function Home() {
               HOME
             </Text>
             <Form />
-            {/* Display comments */}
-
             {threadData?.map((data: IThreadCard) => (
               <Box border="1px solid #ccc" key={data.id}  borderRadius="md" p={2} mb={2}>
                 <Threads
@@ -62,6 +60,8 @@ export default function Home() {
                   content={data.content}
                   image={data.image}
                   users={data.users}
+                  likes={data.likes}
+                  isLikes={data.isLikes}
                 />
               </Box>
             ))}
