@@ -17,10 +17,15 @@ export const upload = (fieldName: string) => {
 	return (req: Request, res: Response, next: NextFunction) => {
 		uploadFile.single(fieldName)(req, res, function (error: any) {
 			if (error) {
-				return res.status(400).json({ error });
+				if(error instanceof multer.MulterError && error.code === "LIMIT_FILE_SIZE") return next();
+				return res.status(400).json({ error })
+			} else {
+				if(req.file) {
+					res.locals.filename = req.file.filename;
+				}
+				next();
+				
 			}
-			res.locals.filename = req.file.filename;
-			next();
 		});
 	};
 };

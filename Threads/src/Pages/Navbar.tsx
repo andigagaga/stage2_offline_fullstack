@@ -5,19 +5,14 @@ import { FaHome, FaSearch, FaUser, FaHeart } from "react-icons/fa";
 export default function MyNavbar() {
   return (
     <ChakraProvider>
-  <Box borderLeft="1px solid #ccc">
+  <Box  bg='red'>
     <Box
-      position="fixed"
       display="flex"
       flexDirection="column"
       backgroundColor={"gray.800"}
-      padding={8}
-      borderRight="1px solid #ccc" // Menambahkan border ke elemen ini
-      borderTop="1px solid #ccc"
-      borderBottom="1px solid #ccc"
-      height="100%" // Mengatur tinggi elemen menjadi 100% untuk mencapai ketinggian kontennya
+    
     >
-      <Text color="white" fontWeight="bold" fontSize="50" marginBottom={8}>
+      <Text color="white" fontWeight="bold" fontSize="50" >
         CIRCLE
       </Text>
       <Text display="flex" alignItems="center" gap="10px">

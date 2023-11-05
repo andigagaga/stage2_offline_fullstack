@@ -6,6 +6,7 @@ import {
   ManyToOne,
   OneToMany,
   JoinColumn,
+  CreateDateColumn,
 } from "typeorm";
 import { User } from "./User";
 import { Likes } from "./Like";
@@ -22,7 +23,7 @@ export class Threads {
   @Column()
   image: string;
 
-  @Column({ nullable: true})
+  @CreateDateColumn({ nullable: true})
 	posted_at: Date;
 
   @ManyToOne(() => User, (user) => user.threads, {

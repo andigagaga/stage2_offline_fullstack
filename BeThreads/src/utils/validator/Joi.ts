@@ -4,7 +4,6 @@ import * as joi from "joi"
 export const CreateThreadSchema = joi.object({
     content: joi.string(),
     image: joi.string(),
-    users: joi.number()
 })
 
 export const UpdateThreadSchema = joi.object({

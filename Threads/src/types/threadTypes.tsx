@@ -1,16 +1,18 @@
-import { ThreadLikeType } from "./like";
+// import { ThreadLikeType } from "./like";
 
 export type IThreadCard = {
-  id?: number;
-	content?: string;
-	image?: string;
-	users?: {
-		userName?: string;
-		fullName?: string;
-		profile_picture?: string;
+  id: number;
+	content: string;
+	image: string;
+	posted_at: string;
+	users: {
+		id: number
+		userName: string;
+		fullName: string;
+		profile_picture: string;
 	};
-	likes?: ThreadLikeType[];
-	isLikes: boolean;
+	likes:[];
+	replies: []; 
 };
 
 export type IThreadsPost = {

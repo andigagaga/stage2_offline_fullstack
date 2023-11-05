@@ -10,14 +10,32 @@ export default new (class ThreadServices {
     private readonly threadRepository: Repository<Threads> =
         AppDataSource.getRepository(Threads);
 
-        async find(req: Request, res: Response): Promise<Response> {
-       
-
+    async find(req: Request, res: Response): Promise<Response> {
         try {
             const threads = await this.threadRepository.find({
                 relations: ["users", "likes", "replies"],
+                order: {
+                    posted_at: "DESC"
+                },
+
+                select: {
+                    users: {
+                        id: true,
+                        fullName: true,
+                        userName: true,
+                        profile_picture: true,
+                    },
+                },
             }); // Menjalankan pencarian thread
-            return res.json(threads); // Mengirim respons JSON dengan daftar thread
+
+            const threaData = threads.map((thread) => {
+                return {
+                    ...thread,
+                    likes: thread.likes,
+                    replies: thread.replies,
+                };
+            });
+            return res.status(200).json(threaData);
         } catch (error) {
             console.error(error); // Men {cetak kesalahan ke konsol
             return res
@@ -30,7 +48,6 @@ export default new (class ThreadServices {
         try {
             const data = req.body;
             const user = res.locals.loginSession;
-            console.log(user);
 
             const { error, value } = CreateThreadSchema.validate(data);
             if (error) {
@@ -48,11 +65,9 @@ export default new (class ThreadServices {
                 folder: "circle-app",
             });
 
-            console.log("fffffffff", req.file.path);
-
             const thread = this.threadRepository.create({
                 content: value.content,
-                image: result.secure_url,
+                image: value.image ? value.image : "",
                 users: user.user.id,
             });
 
@@ -66,7 +81,6 @@ export default new (class ThreadServices {
         }
     }
 
- 
     async update(req: Request, res: Response): Promise<Response> {
         try {
             const id = parseInt(req.params.id);

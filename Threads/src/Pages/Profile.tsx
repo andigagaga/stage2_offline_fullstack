@@ -1,121 +1,78 @@
-import { Box,  Text, Button } from "@chakra-ui/react";
-import Footer from "../Feathurs/Threads/Components/Footer";
-import { useSelector } from "react-redux";
-import { RootState } from "../Store/Type/rootState";
+import {
+  Box,
+  Text,
+  Button,
+  Card,
+  Avatar,
+  Flex,
+  Stack,
+  HStack,
+} from "@chakra-ui/react";
+// import { useSelector } from "react-redux";
+// import { RootState } from "../Store/Type/rootState";
 
 function MyProfile() {
-  const user = useSelector((state: RootState) => state.auth);
-  console.log(user);
+  // const user = useSelector((state: RootState) => state.auth);
 
   return (
-    <Box marginLeft={36}>
-      <Box
-        display="flex"
-        alignItems="center"
-        width={72}
-        height={40}
-        flexDirection={"column"}
-        marginTop={8}
-        padding={8}
-      >
-        <Text
-          marginBottom={8}
-          fontWeight="bold"
-          display="flex"
-          justifyContent="center"
-          fontSize={50}
-          color="white"
-        >
-          PROFILE
-        </Text>
-        <Box padding={2} borderRadius={4} width={72} height={72}>
-          <Box
-            bg="linear-gradient(to top, #96fbc4 0%, #f9f586 100%)"
-            paddingTop={6}
-            rounded={4}
-          >
-             <img
-              src="https://img.freepik.com/free-photo/young-woman-white-shirt-pointing-up_1150-27592.jpg?w=360&t=st=1698054382~exp=1698054982~hmac=4f5dda55004e0af0fb6f27a532d0a2749014e4a566512e41471a16f7bc8647c9"
-              alt="Follows"
-              width="50"
-              height="50"
-              style={{ borderRadius: "50%", marginRight: "10px", marginLeft: "25px" }}
-            />
-          </Box>
-          <Box backgroundColor={"green"} padding={1} borderRadius={4} marginTop={2}>
-            <Text fontWeight="extrabold" color={"white"} marginTop={2}>
-              {user.fullName}
-            </Text>
-            <Text color="grey">
-              {user.email}
-            </Text>
-            <Text color={"white"}>{user.userName}</Text>
-          </Box>
-
-          <Box>
-            <Button
-              backgroundColor={"green"}
-              width={36}
-              height={8}
-              marginTop={8}
-            >
-              Edit Profile
-            </Button>
-          </Box>
-        </Box>
-
+    <Box>
+      <Card bg={"whiteAlpha.200"} p={4}>
+        <Text color={"white"}>My Profile</Text>
         <Box
-          marginTop={8}
-          color={"white"}
-          fontWeight={"bold"}
-          padding={4}
-          marginBottom={8}
-          width={72}
-          height={72}
+          pos={"relative"}
+          h={"70px"}
+          mt={3}
+          rounded={"xl"}
+          bg={
+            "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)"
+          }
         >
-          <Text>Suggested For You</Text>
-          <Box padding={4} display={"flex"}>
-            <img
-              src="https://img.freepik.com/free-photo/young-woman-white-shirt-pointing-up_1150-27592.jpg?w=360&t=st=1698054382~exp=1698054982~hmac=4f5dda55004e0af0fb6f27a532d0a2749014e4a566512e41471a16f7bc8647c9"
-              alt="Follows"
-              width="20"
-              height="10"
-              style={{ borderRadius: "50%", marginRight: "10px" }}
-            />
-            <Text>Guswandi</Text>
-            <Button width={20} height={5} marginLeft={4}>
-              Follows
-            </Button>
-          </Box>
-          <Box padding={4} display={"flex"}>
-            <img
-              src="https://img.freepik.com/free-photo/young-woman-white-shirt-pointing-up_1150-27592.jpg?w=360&t=st=1698054382~exp=1698054982~hmac=4f5dda55004e0af0fb6f27a532d0a2749014e4a566512e41471a16f7bc8647c9"
-              alt="Follows"
-              width="20"
-              height="10"
-              style={{ borderRadius: "50%", marginRight: "10px" }}
-            />
-            <Text>Guswandi</Text>
-            <Button width={20} height={5} marginLeft={4}>
-              Follows
-            </Button>
-          </Box>
-          <Box padding={4} display={"flex"} marginBottom={2}>
-            <img
-              src="https://img.freepik.com/free-photo/young-woman-white-shirt-pointing-up_1150-27592.jpg?w=360&t=st=1698054382~exp=1698054982~hmac=4f5dda55004e0af0fb6f27a532d0a2749014e4a566512e41471a16f7bc8647c9"
-              alt="Follows"
-              width="20"
-              height="10"
-              style={{ borderRadius: "50%", marginRight: "10px" }}
-            />
-            <Text>Guswandi</Text>
-            <Button width={20} height={5} marginLeft={4}>
-              Follows
-            </Button>
+          <Box
+            pos={"absolute"}
+            bottom={-6}
+            left={4}
+            p={1}
+            bg={"blackAlpha.800"}
+            rounded={"full"}
+          >
+            <Avatar size={"md"} />
           </Box>
         </Box>
-        <Footer />
-      </Box>
+        <Flex justify={"right"} mt={1}>
+          <Button
+            color={"white"}
+            size={"xs"}
+            rounded={"full"}
+            variant={"outline"}
+            mt={8}
+            w={"fit-content"}
+            _hover={{ bg: "gray.700" }}
+          >
+            Edit Profile
+          </Button>
+        </Flex>
+        <Stack spacing={0}>
+          <Text mt={3} fontSize={"lg"} fontWeight={"semibold"} color={"white"}>
+            name😘😘
+          </Text>
+          <Text fontSize={"xs"} color={"white"} my={2}>
+            @userName
+          </Text>
+          <Text fontSize={"sm"} color={"white"}>
+            profilDesc
+          </Text>
+          <HStack fontSize={"sm"}>
+            <HStack>
+              <Text color={"whiteAlpha.800"}>200</Text>
+              <Text color={"whiteAlpha.800"}>Following</Text>
+            </HStack>
+            <HStack>
+              <Text color={"whiteAlpha.800"}>200</Text>
+              <Text color={"whiteAlpha.800"}>Followers</Text>
+            </HStack>
+          </HStack>
+        </Stack>
+      </Card>
     </Box>
   );
 }
