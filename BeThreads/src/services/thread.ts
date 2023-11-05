@@ -13,7 +13,7 @@ export default new (class ThreadServices {
     async find(req: Request, res: Response): Promise<Response> {
         try {
             const threads = await this.threadRepository.find({
-                relations: ["users", "likes", "replies"],
+                relations: ["users", "likes","likes.users","replies"],
                 order: {
                     posted_at: "DESC"
                 },

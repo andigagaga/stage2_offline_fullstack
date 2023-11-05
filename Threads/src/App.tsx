@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { API, setAuthToken } from "./libs/Api";
 import { useEffect, useState } from "react";
 import { AUTH_CHECK, AUTH_ERROR } from "./Store/rootReducer";
-import Main from "./LayOut/Main";
+// import Main from "./LayOut/Main";
 
 export default function App() {
   const auth = useSelector((state: RootState) => state.auth);
@@ -22,8 +22,6 @@ export default function App() {
     try {
       setAuthToken(localStorage.token);
       const response = await API.get("/auth/check");
-      console.log("check auth app", response);
-
       dispatch(AUTH_CHECK(response.data.user));
       setIsLoading(false);
     } catch (err) {
