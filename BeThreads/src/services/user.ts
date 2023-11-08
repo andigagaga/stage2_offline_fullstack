@@ -31,6 +31,37 @@ export default new (class UserServices {
     }
   }
 
+  async findOne(req: Request, res: Response): Promise<Response> {
+    try {
+      const id = parseInt(req.params.id);
+      const user = await this.userRepository.findOne({
+        where: {
+          id: id,
+        }
+      });
+
+      if(!user) return res.status(404).json("there not found");
+      const followings = await this.userRepository.query(
+        `SELECT u.id, u."userName", u."fullName", u.profile_picture FROM following  as f INNER JOIN users as u ON u.id=f.following_id WHERE f.follower_id = $1`, [id]
+      );
+      const followers = await this.userRepository.query(
+        `SELECT u.id, u."userName", u."fullName", u.profile_picture FROM following  as f INNER JOIN users as u ON u.id=follower_id WHERE f.following_id = $1`, [id]
+      );
+
+      const userDetail = {
+        user,
+        followings,
+        followers
+      }
+      return res.status(200).json(userDetail);
+      
+    } catch (error) {
+      return res.status(500).json({
+        message : error.message
+      })
+    }
+  }
+
   async sugestedUsers(req: Request, res: Response): Promise<Response> {
     try {
       const user = await this.userRepository.createQueryBuilder()

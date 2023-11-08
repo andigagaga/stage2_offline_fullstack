@@ -1,4 +1,4 @@
-BE = entitis - service - controller  - route 
+BE = service - controller  - route - index
 
 FE = type - page/mapping - threads/component
 

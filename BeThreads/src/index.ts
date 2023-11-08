@@ -5,9 +5,8 @@ import threadRouter from "./route/threadsRoute";
 import userRouter from "./route/usersRoute";
 import replyRouter from "./route/replyRoute";
 import likeRouter from "./route/likeRoute";
-// import followerRouter from "./route/Follower";
-// import followingRouter from "./route/Following";
-// import followingRouter from "./route/Following";
+
+import FollowingRouter from "./route/Following"
 import AuthRoutes from "./route/Auth";
 import * as cors from "cors";
 import "dotenv/config"
@@ -26,8 +25,7 @@ AppDataSource.initialize()
         app.use("/api/v1", userRouter);
         app.use("/api/v1", replyRouter);
         app.use("/api/v1", likeRouter);
-        // app.use("/api/v1", followerRouter);
-        // app.use("/api/v1",followingRouter);
+        app.use("/api/v1", FollowingRouter);
         app.use("/api/v1", AuthRoutes)
 
         app.listen(port, () => {

@@ -9,6 +9,7 @@ import { API, setAuthToken } from "./libs/Api";
 import { useEffect, useState } from "react";
 import { AUTH_CHECK, AUTH_ERROR } from "./Store/rootReducer";
 import SearcUser from "./Pages/SearcUser";
+import DetailProfile from "./Pages/detailProfile";
 // import Main from "./LayOut/Main";
 
 export default function App() {
@@ -65,6 +66,7 @@ export default function App() {
           <Route path="/" element={<IsNotLogin />}>
             <Route path="/" element={<Home />} />
             <Route path="/search" element={<SearcUser />} />
+            <Route path="/detailprofile" element={<DetailProfile />} />
           </Route>
 
           <Route path="/" element={<IsLogin />}>
