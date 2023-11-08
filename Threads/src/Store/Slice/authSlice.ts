@@ -1,47 +1,40 @@
-import { IUser } from "../../types/userType";
-import { setAuthToken } from "../../libs/Api";
+import { IProfile } from "../../types/userType";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: IUser = {
-  id: 0,
-  userName: "",
-  fullName: "",
-  email: "",
-  profile_picture: "",  // Pastikan ini adalah URL gambar yang valid
-  profile_desc: "",
+const initialState: IProfile = {
+  user: {
+    id: 0,
+    email: "",
+    fullName: "",
+    profile_desc: "",
+    profile_picture: "",
+    userName: "",
+  },
+  followings: [],
+  followers: [],
+  message: "",
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    AUTH_LOGIN: (_, action) => {
-      const payload = action.payload;
-      console.log(payload);
-      setAuthToken(payload.token);
-      localStorage.setItem("token", payload.token);
-
-      const user: IUser = {
-        id: payload.id,
-        userName: payload.userName,
-        fullName: payload.fullName,
-        email: payload.email,
-        profile_picture: payload.profile_picture,  // Pastikan ini adalah URL gambar yang valid
-        profile_desc: payload.profile_desc,
-      };
-
-      return user;
-    },
+   
     AUTH_CHECK: (_, action) => {
       const payload = action.payload;
-
-      const user: IUser = {
-        id: payload.id,
-        userName: payload.userName,
-        fullName: payload.fullName,
-        email: payload.email,
-        profile_picture: payload.profile_picture,  // Pastikan ini adalah URL gambar yang valid
-        profile_desc: payload.profile_desc,
+      
+      const user: IProfile = {
+        user: {
+          email: payload.user.email,
+          fullName: payload.user.fullName,
+          id: payload.user.id,
+          profile_desc: payload.user.profile_desc,
+          profile_picture: payload.user.profile_picture,
+          userName: payload.user.userName,
+        },
+        followings: payload.followings,
+        followers: payload.followers,
+        message: "",
       };
 
       return user;

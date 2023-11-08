@@ -1,14 +1,14 @@
 import { IUserlogin } from "../../../../types/userType";
 import { useState, ChangeEvent } from "react";
-import { API } from "../../../../libs/Api";
-import { useNavigate } from "react-router-dom";
+import { API, setAuthToken } from "../../../../libs/Api";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { AUTH_LOGIN } from "../../../../Store/rootReducer";
+import { AUTH_CHECK, AUTH_ERROR } from "../../../../Store/rootReducer";
 
 
 export function useLogin() {
     const navigate = useNavigate();
-    const disPatch = useDispatch();
+    
 
     const [form, setForm] = useState<IUserlogin>({
 		email: "",
@@ -22,30 +22,34 @@ export function useLogin() {
 		});
 	}
 
+	const disPatch = useDispatch();
+	async function authcheck() {
+		try {
+			setAuthToken(localStorage.token);
+			const response = await API.get("/auth/check");
+			disPatch(AUTH_CHECK(response.data));
+		} catch (error) {
+			console.log(error);
+			disPatch(AUTH_ERROR())
+			return <Navigate to={"/auth/login"} />;
+			
+		}
+	}
+
 	async function handleLogin() {
 		try {
 			const response = await API.post("/auth/login", form);
-
-			console.log(response);
-			
-			if (response.status === 200) {
-
-				// Jika responsenya berhasil (status 200 OK), Anda dapat melakukan tindakan yang sesuai
-				disPatch(AUTH_LOGIN(response?.data));
-				navigate("/");
-			} else if (response.status === 401) {
-				// Jika responsenya adalah "Unauthorized" (status 401), token mungkin hilang atau tidak valid
-				// Lakukan sesuatu di sini, misalnya, tampilkan pesan kesalahan
-				console.log("Unauthorized: Missing or invalid token");
-			} else {
-				// Tindakan lain yang sesuai untuk kode tanggapan HTTP lainnya
-				console.log("HTTP Status Code:", response.status);
-			}
+			localStorage.setItem("token", response.data.token);
+			authcheck();
+			navigate("/");
 		} catch (error) {
-			// Menangani kesalahan jaringan atau kesalahan lainnya
-			console.log("Error:", error);
+			console.log(error);
+			
 		}
 	}
+
+
+	
 
 	// }
 

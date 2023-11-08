@@ -1,13 +1,6 @@
-export type follower = {
+export type IFollow = {
     id: number
     fullName: string
     userName: string
-    password: string
-}
-
-export type following = {
-    id: number
-    fullName: string
-    userName: string
-    password: string
+    profile_picture: string
 }

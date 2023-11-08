@@ -1,81 +1,101 @@
 import Home from "./Pages/Home";
-import { Route, Routes, Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 // import DetailThreads from "./Feathurs/Threads/Components/DetailThreads";
 import Register from "./Pages/Register";
 import Login from "./Pages/Login";
-import { RootState } from "./Store/Type/rootState";
-import { useDispatch, useSelector } from "react-redux";
+// import { RootState } from "./Store/Type/rootState";
+import { useDispatch } from "react-redux";
 import { API, setAuthToken } from "./libs/Api";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect } from "react";
 import { AUTH_CHECK, AUTH_ERROR } from "./Store/rootReducer";
 import SearcUser from "./Pages/SearcUser";
 import DetailProfile from "./Pages/detailProfile";
 // import Main from "./LayOut/Main";
 
 export default function App() {
-  const auth = useSelector((state: RootState) => state.auth);
-  console.log(auth);
+  // const auth = useSelector((state: RootState) => state.auth);
+  // console.log(auth);
 
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  // const [isLoading, setIsLoading] = useState<boolean>(true);
+  // const navigate = useNavigate();
+  
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   async function authCheck() {
     try {
       setAuthToken(localStorage.token);
       const response = await API.get("/auth/check");
-      dispatch(AUTH_CHECK(response.data.user));
-      setIsLoading(false);
+      dispatch(AUTH_CHECK(response.data));
+      console.log(response);
+      
     } catch (err) {
       dispatch(AUTH_ERROR());
       console.log("auth check error", err);
-      setIsLoading(false);
-      navigate("/auth/login");
+      return <Navigate to="/auth/login" />;
     }
   }
 
   useEffect(() => {
     if (localStorage.token) {
       authCheck();
-    } else {
-      setIsLoading(false);
-    }
+    } 
   }, []);
 
   // Private Root
-  function IsNotLogin() {
-    if (!localStorage.token) {
-      return <Navigate to="/auth/login" />;
+  function IsNotLogin({ children }: { children: ReactNode }) {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return children;
     } else {
-      return <Outlet />;
+      return <Navigate to="/" />;
     }
   }
 
-  function IsLogin() {
-    if (localStorage.token) {
-      return <Navigate to="/" />;
+  function IsLogin({children } : {children: ReactNode}) {
+    const token = localStorage.getItem("token");
+    if (token) {
+      return children;
     } else {
-      return <Outlet />;
+      return <Navigate to="/auth/login" />;
     }
   }
 
   return (
     <>
-      {isLoading ? null : (
         <Routes>
-          <Route path="/" element={<IsNotLogin />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/search" element={<SearcUser />} />
-            <Route path="/detailprofile" element={<DetailProfile />} />
-          </Route>
+          
+            <Route path="/" element={
+            <IsLogin>
+              <Home />
+            </IsLogin>
+          } />
+            <Route path="/search" element={
+              <IsLogin>
 
-          <Route path="/" element={<IsLogin />}>
-            <Route path="/auth/register" element={<Register />} />
-            <Route path="/auth/login" element={<Login />} />
+                <SearcUser />
+              </IsLogin>
+            } />
+            <Route path="/detailprofile" element={
+              <IsLogin>
+            <DetailProfile />
+            </IsLogin>
+            } />
+         
+
+         
+            <Route path="/auth/register" element={
+              <IsNotLogin>
+
+                <Register />
+              </IsNotLogin>
+            } />
+            <Route path="/auth/login" element={
+              <IsNotLogin>
+            <Login />
+            </IsNotLogin>
+            } />
             
-          </Route>
+     
         </Routes>
-      )}
     </>
   );
 }

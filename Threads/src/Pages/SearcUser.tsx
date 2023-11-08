@@ -38,7 +38,7 @@ export default function SearcUser() {
 
 
       <Stack mt={12} justifyContent={"center"} px={32} spacing={4}>
-        {data?.filter((e: IUser) => e.id !== auth.id).map((e: IUser) => (
+        {data?.filter((e: IUser) => e.id !== auth.user?.id).map((e: IUser) => (
           <FollowItem
             id={e.id}
             profile_picture={e.profile_picture}
