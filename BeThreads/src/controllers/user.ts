@@ -17,6 +17,10 @@ class UserController {
     delete(req: Request, res: Response) {
         UserServices.delete(req, res)
     }
+
+    sugestedUsers(req: Request, res: Response) {
+        UserServices.sugestedUsers(req, res)
+    }
 }
 
 export default new UserController;

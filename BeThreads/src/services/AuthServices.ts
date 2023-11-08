@@ -13,6 +13,8 @@ export default new (class AuthServices {
   private readonly AuthRepository: Repository<User> =
     AppDataSource.getRepository(User);
 
+    private readonly userRepository: Repository<User> = AppDataSource.getRepository(User);
+
   async register(req: Request, res: Response): Promise<Response> {
     try {
       const data = req.body;
@@ -108,10 +110,25 @@ export default new (class AuthServices {
         },
       });
 
+      if(!user)
+        return res.status(404).json({ Error: "User not found" });
+
+        // const followings = await this.userRepository.query(
+        //   "SELECT u.id, u.userName, u.fullName, u.profile_picture FROM following  as f INNER JOIN users as u ON u.id=f.following_id WHERE f.follower_id = $1", [loginSession.user.id]
+        // )
+        
+
+        // const follower = await this.userRepository.query(
+        //   "SELECT u.id, u.userName, u.fullName, u.profile_picture FROM following  as f INNER JOIN users as u ON u.id=follower_id WHERE f.following_id = $1", [loginSession.user.id]
+        // )
+        // console.log(follower);
+        
+
       return res.status(200).json({
-        message: "You are logged in",
         user,
-      });
+        // followings,
+        // follower
+      })
     } catch (err) {
       return res.status(501).json({ Error: `${err.message}` });
     }

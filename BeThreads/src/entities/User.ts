@@ -3,7 +3,6 @@ import { Threads } from "./Thread"
 import { Reply } from "./Reply";
 // import reply from "../services/reply";
 import { Likes } from "./Like";
-import Follower from "../services/Follower";
 // import { Followtis } from "./Follow";
 
 
@@ -49,19 +48,6 @@ export class User {
     })
     likes!: Likes[]
 
-    // @OneToMany(() => Followtis , (follower) => follower.followerToUser, {
-    //     onUpdate: "CASCADE",
-    //     onDelete: "CASCADE"
-    // })
-    // follower: Followtis[]
-
-    // @OneToMany(() => Followtis , (following) => following.followingToUser, {
-    //     onUpdate: "CASCADE",
-    //     onDelete: "CASCADE"
-    // })
-    // following: Followtis[]
-
-
     @ManyToMany(() => User, (user) => user.users)
 	@JoinTable({
 		name: "following",
@@ -74,7 +60,7 @@ export class User {
 			referencedColumnName: "id",
 		},
 	})
-	users!: User[];
+	users: User[];
 
 
 }

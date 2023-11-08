@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { API, setAuthToken } from "./libs/Api";
 import { useEffect, useState } from "react";
 import { AUTH_CHECK, AUTH_ERROR } from "./Store/rootReducer";
+import SearcUser from "./Pages/SearcUser";
 // import Main from "./LayOut/Main";
 
 export default function App() {
@@ -63,11 +64,13 @@ export default function App() {
         <Routes>
           <Route path="/" element={<IsNotLogin />}>
             <Route path="/" element={<Home />} />
+            <Route path="/search" element={<SearcUser />} />
           </Route>
 
           <Route path="/" element={<IsLogin />}>
             <Route path="/auth/register" element={<Register />} />
             <Route path="/auth/login" element={<Login />} />
+            
           </Route>
         </Routes>
       )}

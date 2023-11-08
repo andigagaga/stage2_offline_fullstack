@@ -8,11 +8,11 @@ import {
   Stack,
   HStack,
 } from "@chakra-ui/react";
-// import { useSelector } from "react-redux";
-// import { RootState } from "../Store/Type/rootState";
+import { useSelector } from "react-redux";
+import { RootState } from "../Store/Type/rootState";
 
 function MyProfile() {
-  // const user = useSelector((state: RootState) => state.auth);
+  const auth = useSelector((state: RootState) => state.auth);
 
   return (
     <Box>
@@ -53,13 +53,13 @@ function MyProfile() {
         </Flex>
         <Stack spacing={0}>
           <Text mt={3} fontSize={"lg"} fontWeight={"semibold"} color={"white"}>
-            name😘😘
+            {auth.fullName}😘😘
           </Text>
           <Text fontSize={"xs"} color={"white"} my={2}>
-            @userName
+            @{auth.userName}
           </Text>
           <Text fontSize={"sm"} color={"white"}>
-            profilDesc
+            {auth.profile_desc}
           </Text>
           <HStack fontSize={"sm"}>
             <HStack>

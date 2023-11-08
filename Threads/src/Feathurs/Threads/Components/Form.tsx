@@ -1,4 +1,4 @@
-import { Box, Input, Button, Text } from "@chakra-ui/react";
+import { Box, Input, Button } from "@chakra-ui/react";
 import { BiImageAdd } from "react-icons/bi";
 import { useThreads } from "../Hooks/useThreads";
 
@@ -9,9 +9,6 @@ export default function Form() {
     <form onSubmit={handlePost} encType="multipart/form-data">
       <Box display="flex" marginBottom={8} flexDirection={"column"} padding={4}>
         <Box>
-          <Text color={"white"} fontWeight={"bold"}>
-            Your Caption
-          </Text>
           <Input
             placeholder="Click Is Your Posting..."
             color="white"
@@ -27,9 +24,6 @@ export default function Form() {
         </Box>
 
         <Box marginBottom={4}>
-          <Text color={"white"} fontWeight={"bold"} marginBottom={2}>
-            Your Photos
-          </Text>
           <label
             htmlFor="image"
             style={{
