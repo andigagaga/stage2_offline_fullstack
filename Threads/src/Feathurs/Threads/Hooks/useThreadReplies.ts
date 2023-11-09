@@ -7,7 +7,7 @@ import { AxiosError } from 'axios'
 export const useThreadReplies = ({onSuccess, idThread} : any) => {
   return useMutation({
     mutationFn: async (body : {content: string}) => {
-      await API.post(`/thread/${idThread}/reply`, body, {
+      await API.post(`/reply/${idThread}`, body, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }

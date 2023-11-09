@@ -10,7 +10,6 @@ export default function Replies() {
 
   const { data, isLoading } = useDetailThreads(idParams);
   const detailData = data?.data;
-  console.log(detailData);
   
   
   

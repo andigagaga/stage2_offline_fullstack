@@ -6,6 +6,7 @@ import {
   HStack,
   Image,
   Input,
+  Stack,
   Text,
 } from "@chakra-ui/react";
 
@@ -47,6 +48,12 @@ export default function ThreadDetail({
   const idThread = Number(params.id);
 
   const [inputContent, setInputContent] = useState<string>("");
+  
+  const [showReplies, setShowReplies] = useState(false);
+
+  const toggleReplies = () => {
+    setShowReplies(!showReplies);
+  };
 
   const queryClient = useQueryClient();
   const { mutate: repliesThread } = useThreadReplies({
@@ -67,6 +74,7 @@ export default function ThreadDetail({
       <HStack display={"flex"} justifyContent={"center"}>
         <Box>
           <Box w={"650px"}>
+            <Box my={8}>
             {image && (
               <Image
                 src={image}
@@ -77,70 +85,85 @@ export default function ThreadDetail({
               />
             )}
 
-            <Box color={"white"} mt={2}>
-              <Avatar size={"md"} src={profile_picture}></Avatar>
-              <Text>{fullName}</Text>
-              <Text>{userName}</Text>
-              <Text>{created_at}</Text>
-              <hr
-                style={{
-                  color: "white",
-                  marginTop: "5px",
-                  marginBottom: "5px",
-                }}
-              ></hr>
-              <Text>{content}</Text>
-              <hr
-                style={{
-                  color: "white",
-                  marginTop: "5px",
-                  marginBottom: "5px",
-                }}
-              ></hr>
-              <Text>
-                <HStack spacing={6}>
-                  <HStack cursor={"pointer"} color={"whiteAlpha.600"} mt={2}>
-                    <AiFillHeart size={24} color={
-                      likes?.map((like: ThreadLikeType) => like.users.id).includes(auth.user.id) ? "red" : "white"
-                    } />
-                    <Text fontSize="sm" color="whiteAlpha.600">
-                      {likes?.length}
-                    </Text>
-                  </HStack>
-                  <HStack spacing={2}>
-                    <BiCommentDetail size={24} color={"white"} />
-                    <Text fontSize="sm" color="whiteAlpha.600">
-                      replies
-                    </Text>
-                  </HStack>
+            <Box
+              mt={2}
+              borderRadius="md"
+              boxShadow="md"
+              p={4}
+              textAlign="left"
+            >
+              <Avatar size="md" src={profile_picture} />
+              <Text fontSize="lg" color={"white"}>{fullName}</Text>
+              <Text fontSize="md" color={"white"}>@{userName}</Text>
+              <Text fontSize="sm" color={"white"}>{created_at}</Text>
+            </Box>
+            
+
+              <hr style={{ marginTop: "5px", marginBottom: "5px" }} />
+              <Text fontSize="md" color={"white"} my={8}>{content}</Text>
+              <hr style={{ marginTop: "5px", marginBottom: "5px" }} />
+              <HStack spacing={6} mt={2}>
+                <HStack cursor="pointer" color="whiteAlpha.600">
+                  <AiFillHeart
+                    size={24}
+                    color={
+                      likes
+                        ?.map((like: ThreadLikeType) => like.users.id)
+                        .includes(auth.user.id)
+                        ? "red"
+                        : "white"
+                    }
+                  />
+                  <Text fontSize="sm" color="whiteAlpha.600">
+                    {likes?.length}
+                  </Text>
                 </HStack>
-              </Text>
-              <hr
-                style={{
-                  color: "white",
-                  marginTop: "5px",
-                  marginBottom: "5px",
-                }}
-              ></hr>
-              <Text mt={12} display={"flex"}>
+                <HStack spacing={2}>
+                  <BiCommentDetail size={24} color="white" />
+                  <Text fontSize="sm" color="whiteAlpha.600">
+                    replies
+                  </Text>
+                </HStack>
+              </HStack>
+              <Text mt={12} display="flex">
                 <FaSmile size={24} />
-                <Input placeholder="Write Your Reply" border={"none"} value={inputContent} onChange={(e) => setInputContent(e.target.value)}></Input>
-                <Button color={"white"} bg={"none"} onClick={handleReplies}>
+                <Input
+                  placeholder="Write Your Reply"
+                  color={"white"}
+                  border="none"
+                  value={inputContent}
+                  onChange={(e) => setInputContent(e.target.value)}
+                />
+                <Button color="white" bg="none" onClick={handleReplies}>
                   Post
                 </Button>
               </Text>
             </Box>
-            <HStack>
-              {replies && replies?.map((e: IReplies) => (
-                <Box>
-                  <Avatar size={"md"} src={e.users?.profile_picture} name={e.users?.fullName}/>
-                  <Box>
-                    <Text>{e.users?.fullName}</Text>
-                    <Text>{e.users?.userName}</Text>
+            <Stack>
+              {replies &&
+                replies?.map((e: IReplies) => (
+                  <Box mt={8} display={"flex"} flexDirection={"row"}>
+                    <Avatar
+                      size={"md"}
+                      src={e.users?.profile_picture}
+                      name={e.users?.fullName}
+                    />
+                    <Box
+                      display={"flex"}
+                      flexDirection={"row"}
+                      ml={2}
+                      bg={"whiteAlpha.200"}
+                      p={4}
+                    >
+                      <Text color={"white"}>{e.users?.fullName}</Text>
+                      <Text color={"white"} ml={2}>{e.users?.userName}</Text>
+                      <Text color={"white"}>
+                        {e.content}
+                      </Text>
+                    </Box>
                   </Box>
-                </Box>
-              ))}
-            </HStack>
+                ))}
+            </Stack>
           </Box>
         </Box>
       </HStack>
