@@ -15,10 +15,10 @@ export class Reply {
     @Column()
     content: string
 
-    @CreateDateColumn()
+    @CreateDateColumn({type: "timestamp"})
     created_at: Date
 
-    @UpdateDateColumn()
+    @UpdateDateColumn({type: "timestamp"})
     updated_at: Date
 
     @ManyToOne(() => User , (user) => user.replies, {

@@ -1,5 +1,5 @@
 // import React from "react";
-import { Box, Text, Flex, HStack, Avatar, Image } from "@chakra-ui/react";
+import { Box, Text, Flex, HStack, Avatar, Image, Link } from "@chakra-ui/react";
 import { BsDot } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
@@ -28,7 +28,7 @@ interface Props {
   content?: string;
   image?: string;
   posted_at?: string;
-  idUser?: number;  
+  idUser?: number;
   userName?: string;
   fullName?: string;
   profile_picture?: string;
@@ -89,7 +89,12 @@ export default function Threads({
             </Text>
           </HStack>
 
-          <Text wordBreak="break-all" fontSize="sm" color="whiteAlpha.800" marginBottom={4}>
+          <Text
+            wordBreak="break-all"
+            fontSize="sm"
+            color="whiteAlpha.800"
+            marginBottom={4}
+          >
             {content}
           </Text>
           {image && <Image height={"300px"} src={image} />}
@@ -104,19 +109,21 @@ export default function Threads({
               <AiFillHeart
                 size={24}
                 color={
-                  likes.map((like) => like.users.id).includes(auth.id)
+                  likes.map((like) => like.users.id).includes(auth.user.id)
                     ? "red"
                     : "white"
                 }
               />
               <Text fontSize="sm" color="whiteAlpha.600">
-                {likes?.length}
+                {likes?.length} Likes
               </Text>
             </HStack>
-            <HStack>
-              <BiCommentDetail size={24} color={"white"} />
+            <HStack spacing={2}>
+              <Link href={`/replies/${idThread}`}>
+                <BiCommentDetail size={24} color={"white"} />
+              </Link>
               <Text fontSize="sm" color="whiteAlpha.600">
-                {replies?.length}replies
+                {replies?.length} replies
               </Text>
             </HStack>
           </HStack>

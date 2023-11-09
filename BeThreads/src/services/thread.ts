@@ -28,19 +28,52 @@ export default new (class ThreadServices {
                 },
             }); // Menjalankan pencarian thread
 
-            const threaData = threads.map((thread) => {
+            const threadsData = threads.map((thread) => {
                 return {
                     ...thread,
                     likes: thread.likes,
                     replies: thread.replies,
                 };
             });
-            return res.status(200).json(threaData);
+
+            return res.status(200).json({
+
+                data: threadsData 
+            })
         } catch (error) {
             console.error(error); // Men {cetak kesalahan ke konsol
             return res
                 .status(500)
                 .json({ error: "Terjadi kesalahan dalam permintaan." });
+        }
+    }
+
+    async findOne(req: Request, res: Response): Promise<Response> {
+        try {
+            const id = parseInt(req.params.id);
+            const thread = await this.threadRepository.findOne({
+                where: {
+                    id: id,
+                },
+                relations: ["users","likes.users","replies"],
+                select: {
+                    users: {
+                        id: true,
+                        fullName: true,
+                        userName: true,
+                        profile_picture: true,
+                    }
+                }
+            })
+            if(!thread) return res.status(400).json({
+                message: "thread not found"
+            })
+            return res.status(200).json(thread);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                message: "error data ga dapat di temukan"
+            })
         }
     }
 

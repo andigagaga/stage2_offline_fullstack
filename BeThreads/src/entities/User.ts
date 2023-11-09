@@ -46,7 +46,7 @@ export class User {
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
     })
-    likes!: Likes[]
+    likes: Likes[]
 
     @ManyToMany(() => User, (user) => user.users)
 	@JoinTable({

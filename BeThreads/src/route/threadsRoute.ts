@@ -6,6 +6,7 @@ const router = express.Router();
 
 // router.get("/threads", authenticate, ThreadController.find);
 router.get("/threads", authenticate, ThreadController.find);
+router.get("/thread/:id", ThreadController.findOne);
 
 router.post("/thread", authenticate,upload("image"),ThreadController.create)
 // router.post("/thread", authenticate, upload("image"), ThreadController.create);

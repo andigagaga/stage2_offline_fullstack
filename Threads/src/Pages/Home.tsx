@@ -8,13 +8,17 @@ import { IThreadCard } from "../types/threadTypes";
 
 export default function Home() {
   const { getThreads } = useThreads();
+  console.log(getThreads);
+
+  const data = getThreads?.data
+  
 
   return (
     <React.Fragment>
       <ChakraProvider>
         <Main>
           <Form />
-          {getThreads?.map((data: IThreadCard) => (
+          {data?.data.map((data: IThreadCard) => (
             <Threads
               content={data.content}
               fullName={data.users.fullName}

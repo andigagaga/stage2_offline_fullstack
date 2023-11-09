@@ -53,13 +53,13 @@ function MyProfile() {
         </Flex>
         <Stack spacing={0}>
           <Text mt={3} fontSize={"lg"} fontWeight={"semibold"} color={"white"}>
-            {auth.fullName}😘😘
+            {auth.user.fullName}😘😘
           </Text>
           <Text fontSize={"xs"} color={"white"} my={2}>
-            @{auth.userName}
+            @{auth.user.userName}
           </Text>
           <Text fontSize={"sm"} color={"white"}>
-            {auth.profile_desc}
+            {auth.user.profile_desc}
           </Text>
           <HStack fontSize={"sm"}>
             <HStack>

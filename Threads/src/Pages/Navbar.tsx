@@ -26,6 +26,7 @@ export default function MyNavbar() {
               {/* <SearcUser/> */}
             </Text>
           </Link>
+          
           <Text display="flex" alignItems="center" gap="10px" marginTop={4}>
             <Icon color="white" as={FaHeart} marginBottom={2} />
             <Text color="white">Follows</Text>

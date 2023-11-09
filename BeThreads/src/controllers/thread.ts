@@ -7,6 +7,10 @@ class ThreadController {
         ThreadServices.find(req, res)
     }
 
+    findOne(req: Request, res: Response) {
+        ThreadServices.findOne(req, res)
+    }
+
     create(req: Request, res: Response) {
         ThreadQueue.create(req, res)
     }

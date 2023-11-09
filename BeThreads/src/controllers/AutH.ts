@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import AuthServices from "../services/AuthServices";
+import AuthServices from "../Upload/AuthServices";
 
 export default new (class AuthControllers {
 	register(req: Request, res: Response) {

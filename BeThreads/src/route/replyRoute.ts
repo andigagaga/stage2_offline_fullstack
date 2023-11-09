@@ -4,7 +4,6 @@ import { authenticate } from "../middlewares/Auth";
 
 const replyRouter = express.Router();
 
-replyRouter.get("/replys", replyController.find)
 replyRouter.post("/reply/:id/",authenticate, replyController.create)
 // replyRouter.get("/reply/:id", replyController.findOne)
 

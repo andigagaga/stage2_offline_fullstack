@@ -1,97 +1,149 @@
 import {
-  Box,
-  Text,
-  Flex,
-  Input,
-  IconButton,
   Avatar,
+  Box,
   Button,
+  GridItem,
+  HStack,
+  Image,
+  Input,
+  Text,
 } from "@chakra-ui/react";
-import { FaHeart, FaPaperPlane } from "react-icons/fa";
-import { Link } from "react-router-dom";
 
-export default function DetailThreads() {
+import { AiFillHeart } from "react-icons/ai";
+import { BiCommentDetail } from "react-icons/bi";
+import { FaSmile } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../Store/Type/rootState";
+import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useThreadReplies } from "../Hooks/useThreadReplies";
+import { ThreadLikeType } from "../../../types/like";
+import { IReplies } from "../../../types/IReplies";
+
+interface IProps {
+  content: string;
+  image: string;
+  created_at: string;
+  userName: string;
+  fullName: string;
+  profile_picture: string;
+  likes: [];
+  replies: [];
+}
+export default function ThreadDetail({
+  content,
+  image,
+  created_at,
+  userName,
+  fullName,
+  profile_picture,
+  likes,
+  replies,
+}: IProps) {
+  const auth = useSelector((state: RootState) => state.auth);
+  const params = useParams();
+
+  const idThread = Number(params.id);
+
+  const [inputContent, setInputContent] = useState<string>("");
+
+  const queryClient = useQueryClient();
+  const { mutate: repliesThread } = useThreadReplies({
+    idThread: idThread,
+    onSucces: () => {
+      setInputContent("");
+      queryClient.invalidateQueries({ queryKey: ["threadsReplies"] });
+    },
+  });
+  function handleReplies() {
+    repliesThread({
+      content: inputContent,
+    });
+  }
+
   return (
-    <Flex
-      backgroundColor={"gray.700"}
-      display={"flex"}
-      justifyContent={"center"}
-      paddingY={16} // Mengurangi padding vertikal
-    >
-      <Box
-        borderRadius="md"
-        backgroundColor="white"
-        boxShadow="md"
-        padding={2} // Mengurangi padding card
-        maxWidth="400px" // Mengurangi lebar maksimum card
-      >
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          marginTop={2}
-          marginRight={2}
-        >
-          <Link to={`/`}>
-            <Button
-              backgroundColor="black"
-              color="white"
-              fontWeight="bold"
-              _hover={{ bg: "gray.700" }} // Efek saat kursor diarahkan ke tombol
-              _focus={{ outline: "none" }} // Menghilangkan border saat tombol mendapat fokus
-            >
-              Back
-            </Button>
-          </Link>
-        </Box>
-        ;
-        <Flex alignItems="center" p={2}>
-          <Avatar
-            name="Guswandi"
-            size="sm"
-            src="https://path-to-avatar-image.jpg"
-          />
-          <Box ml={2}>
-            <Text fontWeight="bold" color="gray.800">
-              Guswandi
-            </Text>
-            <Text color="gray.500" fontSize="sm">
-              andi@gmail.com
-            </Text>
+    <GridItem>
+      <HStack display={"flex"} justifyContent={"center"}>
+        <Box>
+          <Box w={"650px"}>
+            {image && (
+              <Image
+                src={image}
+                mx={"auto"}
+                my={"auto"}
+                w={"100%"}
+                h={"100%"}
+              />
+            )}
+
+            <Box color={"white"} mt={2}>
+              <Avatar size={"md"} src={profile_picture}></Avatar>
+              <Text>{fullName}</Text>
+              <Text>{userName}</Text>
+              <Text>{created_at}</Text>
+              <hr
+                style={{
+                  color: "white",
+                  marginTop: "5px",
+                  marginBottom: "5px",
+                }}
+              ></hr>
+              <Text>{content}</Text>
+              <hr
+                style={{
+                  color: "white",
+                  marginTop: "5px",
+                  marginBottom: "5px",
+                }}
+              ></hr>
+              <Text>
+                <HStack spacing={6}>
+                  <HStack cursor={"pointer"} color={"whiteAlpha.600"} mt={2}>
+                    <AiFillHeart size={24} color={
+                      likes?.map((like: ThreadLikeType) => like.users.id).includes(auth.user.id) ? "red" : "white"
+                    } />
+                    <Text fontSize="sm" color="whiteAlpha.600">
+                      {likes?.length}
+                    </Text>
+                  </HStack>
+                  <HStack spacing={2}>
+                    <BiCommentDetail size={24} color={"white"} />
+                    <Text fontSize="sm" color="whiteAlpha.600">
+                      replies
+                    </Text>
+                  </HStack>
+                </HStack>
+              </Text>
+              <hr
+                style={{
+                  color: "white",
+                  marginTop: "5px",
+                  marginBottom: "5px",
+                }}
+              ></hr>
+              <Text mt={12} display={"flex"}>
+                <FaSmile size={24} />
+                <Input placeholder="Write Your Reply" border={"none"} value={inputContent} onChange={(e) => setInputContent(e.target.value)}></Input>
+                <Button color={"white"} bg={"none"} onClick={handleReplies}>
+                  Post
+                </Button>
+              </Text>
+            </Box>
+            <HStack>
+              {replies && replies?.map((e: IReplies) => (
+                <Box>
+                  <Avatar size={"md"} src={e.users?.profile_picture} name={e.users?.fullName}/>
+                  <Box>
+                    <Text>{e.users?.fullName}</Text>
+                    <Text>{e.users?.userName}</Text>
+                  </Box>
+                </Box>
+              ))}
+            </HStack>
           </Box>
-        </Flex>
-        <img
-          src="https://img.freepik.com/free-photo/young-woman-white-shirt-pointing-up_1150-27592.jpg?w=360&t=st=1698054382~exp=1698054982~hmac=4f5dda55004e0af0fb6f27a532d0a2749014e4a566512e41471a16f7bc8647c9"
-          alt="detail"
-          style={{ width: "100%", borderRadius: "lg" }}
-        />
-        <Flex alignItems="center" p={2}>
-          <IconButton
-            icon={<FaHeart color="red" />}
-            aria-label="Like"
-            variant="ghost"
-          />
-          <Text fontWeight="bold" color="gray.600">
-            30 likes
-          </Text>
-        </Flex>
-        <Text color="gray.800">apa sih kamuu</Text>
-        <Input
-          placeholder="Comment..."
-          color="gray.800"
-          fontWeight="bold"
-          border="none"
-          borderTop="1px solid #ccc"
-          borderBottomRadius="lg"
-        />
-        <Flex alignItems="center" p={2}>
-          <IconButton
-            icon={<FaPaperPlane />}
-            aria-label="Send"
-            variant="ghost"
-            colorScheme="blue"
-          />
-        </Flex>
-      </Box>
-    </Flex>
+        </Box>
+      </HStack>
+    </GridItem>
   );
 }
